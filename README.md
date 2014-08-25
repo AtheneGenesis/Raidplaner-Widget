@@ -11,7 +11,7 @@ FR:
 * Utilise uniquement apihub.php et des requêtes JSON.
 * Utilise les traductions de Raidplaner, supporte déjà l'Allemand, l'Anglais, le Français, le Polonais et le Tchèque.
 * Utilise le style de Raidplaner (pour être compatible avec tout les jeux supportés).
-* Facile à installer (1 ficher de 150 lignes).
+* Facile à installer (1 fichier de 150 lignes).
 * Déjà compatible avec World of Warcraft.
 
 ### How to Install ?
