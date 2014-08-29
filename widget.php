@@ -10,7 +10,7 @@ date_default_timezone_set("UTC");
 ////////////////////// VARIABLES //////////////////////
 // $token = "your token in the raidplanner";
 // $url = "http://www.exemple.com/raidplannerdirectory/";
-// $games = "wow,wowp,ff14,teso,swtor,wildstar"; choose yours !
+// $games = "wow,wowp,ff14,teso,swtor,wsta"; choose yours !
 $token = "";
 $url = '';
 $games = "wowp";
@@ -43,7 +43,7 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 $result = curl_exec($ch);
 $raidlist = json_decode($result);
 // On demande la liste des locations
-curl_setopt($ch, CURLOPT_URL,$url.'lib/apihub.php?query=location&games='.$games.'&utf8=true&token='.$token);
+curl_setopt($ch, CURLOPT_URL,$url.'lib/apihub.php?query=location&games='.$games.'&token='.$token);
 $result = curl_exec($ch);
 curl_close($ch);
 $locationresult = json_decode($result);
@@ -56,10 +56,17 @@ foreach($locationresult->result as $l){
 	'Image' => $l->Image
 	);
 }
+$locationfolder = $games;
+if ($games == "wsta"){
+	$locationfolder = "wildstar";
+}elseif ($games == "wowp"){
+	$locationfolder = "wow";
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html>
     <head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>Raidplaner Widget</title>
 		<link rel="stylesheet" type="text/css" href="lib/layout/allstyles.php"/>
 		<script type="text/javascript" src="lib/script/jquery-2.0.3.min.js"></script>
@@ -103,7 +110,7 @@ foreach($locationresult->result as $l){
 			// On affiche
 			echo "<span class=\"raidSlot box_inlay\">\r\n";
 			echo "<span id=\"raid".$v->RaidId."\" class=\"locationImg clickable\" index=\"".$index++."\" locked=\"".$islocked."\">\r\n";
-			echo "<img src=\"themes/icons/wow/raidbig/".$location[$v->LocationId]['Image']."\">\r\n";
+			echo "<img src=\"themes/icons/".$locationfolder."/raidbig/".$location[$v->LocationId]['Image']."\">\r\n";
 			echo "<div class=\"overlayStatus overlayStatus".ucfirst($Status)."\"></div></span>\r\n";
 			echo "<span class=\"raidInfo\">\r\n";
 			echo "<div class=\"location\">".$location[$v->LocationId]['Name']." (".$Size.")</div>\r\n";
