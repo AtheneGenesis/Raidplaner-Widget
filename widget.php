@@ -1,5 +1,5 @@
 <?php
-include("../lib/config/config.php");
+include("lib/config/config.php");
 define("LOCALE_MAIN", true);
 require_once("lib/private/locale.php");
 // On garde le fuseau actuel pour afficher les heures plus tard
@@ -10,7 +10,7 @@ date_default_timezone_set("UTC");
 ////////////////////// VARIABLES //////////////////////
 // $token = "your token in the raidplanner";
 // $url = "http://www.exemple.com/raidplannerdirectory/";
-// $games = "wow,wowp,ff14,teso,swtor,wsta"; choose yours !
+// $games = "wow,wowp,ff14,teso,sw,wsta"; choose yours !
 $token = "";
 $url = '';
 $games = "wowp";
@@ -43,9 +43,9 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 $result = curl_exec($ch);
 $raidlist = json_decode($result);
 // On demande la liste des locations
-curl_setopt($ch, CURLOPT_URL,$url.'lib/apihub.php?query=location&games='.$games.'&token='.$token);
+curl_setopt($ch, CURLOPT_URL,$url.'lib/apihub.php?query=location&games='.$games.'&utf8=true&token='.$token);
 $result = curl_exec($ch);
-curl_close($ch);
+// curl_close($ch);
 $locationresult = json_decode($result);
 // On stock les locations dans une table
 $location = array();
@@ -61,6 +61,8 @@ if ($games == "wsta"){
 	$locationfolder = "wildstar";
 }elseif ($games == "wowp"){
 	$locationfolder = "wow";
+}elseif ($games == "sw"){
+	$locationfolder = "swtor";
 }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
