@@ -10,21 +10,32 @@ date_default_timezone_set("UTC");
 ////////////////////// VARIABLES //////////////////////
 // $token = "your token in the raidplanner";
 // $url = "http://www.exemple.com/raidplannerdirectory/";
+// $games = "wow,wowp,ff14,teso,swtor,wildstar"; choose yours !
 $token = "";
 $url = '';
+$games = "wowp";
 ////////////////// ADVANCED VARIABLES /////////////////             Name	API Default		Desc
 $start = (time()-(60*60*4)); // 		start		0			Return raids starting after this UTC timestamp
 $end = (time()+(60*60*24*7)); // 	end			2147483647	Return raids starting before this UTC timestamp
 $limit = 5; // 						limit		10			Maximum number of raids to return. Passing 0 returns all raids
 $offset = 0; // 					offset		0			Number of raids to skip if a limit is set
-$location = ""; //					location	""			Return raids on specific locations. Comma separated list of location ids or names: "onyxia,4"
-$games = "wowp"; // 				games		""			Return raids for specific games. Comma separated list of game ids: "wow,wowp,ff14,teso"
+$location = ""; //					location	""			Return raids on specific locations. Comma separated list of location ids or names
 $full = "true"; //					full		true		Do/do not return raids with all slots set
 $free = "true"; // 					free		true		Do/do not return raids with not all slots set
 $open = "true"; // 					open		true		Do/do not return raids which are open to attends
 $closed = "true"; // 				closed		false		Do/do not return raids which are closed for attends
 $canceled = "false"; //				canceled	false		Do/do not return raids which have been canceled
-///////////////////////////////////////////////////////
+////////////////////// ROLE ICON //////////////////////
+$roleicon = array(
+	'tnk' => "role_tank",
+	'med' => "role_heal",
+	'dmg' => "role_melee",
+	'atk' => "role_melee",
+	'rgd' => "role_range",
+	'mdd' => "role_melee",
+	'rdd' => "role_range"
+	);
+////////////////////////////////////////////////////////
 $ch = curl_init();
 // On demande la liste des raids
 curl_setopt($ch, CURLOPT_URL,$url.'lib/apihub.php?query=raid&start='.$start.'&offset='.$offset.'&location='.$location.'&games='.$games.'&full='.$full.'&free='.$free.'&open='.$open.'&closed='.$closed.'&canceled='.$canceled.'&token='.$token);
@@ -45,7 +56,6 @@ foreach($locationresult->result as $l){
 	'Image' => $l->Image
 	);
 }
-
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html>
@@ -68,18 +78,21 @@ foreach($locationresult->result as $l){
 			curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
 			$result = curl_exec($ch);
 			$resultapi = json_decode($result);
-			
+
 			// On recupere les infos du raid
 			date_default_timezone_set("UTC");
 			$Status = $v->Status;
 			$Start = $v->Start;
 			$End = $v->End;
 			$Size = $v->Size;
-			$tnk = max($v->Slots->tnk-$v->Available->tnk,0);
-			$med = max($v->Slots->med-$v->Available->med,0);
-			$atk = max($v->Slots->atk-$v->Available->atk,0);
-			$rgd = max($v->Slots->rgd-$v->Available->rgd,0);
-			$Usedslots = $v->Available->tnk+$v->Available->med+$v->Available->atk+$v->Available->rgd;
+			$Usedslots = 0;
+			$available = array(); // Place restante et non utilisee !
+			foreach($v->Slots as $x => $y){ // Pour chaque slot
+				$Usedslots += $v->Available->$x; // Total Slots remplis
+				if (max($v->Slots->$x - $v->Available->$x,0) > 0){ // Si place libre on ajoute au tableau
+					$available[$x] = $v->Slots->$x - $v->Available->$x;
+				}
+			}
 			date_default_timezone_set($timezone);
 			if ($Status == "locked"){
 				$islocked = "true";
@@ -99,24 +112,13 @@ foreach($locationresult->result as $l){
 			echo "<div style=\"line-height: 2.5em\">\r\n";
 			echo $Usedslots." / ".$Size." Joueurs</div></span>\r\n";
 			echo "<span class=\"setupInfo\">\r\n";
-			if ($atk > 0){
-				echo "<div class=\"setupInfoSlot\" style=\"background-image: url(&quot;lib/layout/images/role_melee.png&quot;); display: block;\">\r\n";
-				echo "+".$atk."</div>\r\n";
-			}
-			if ($rgd > 0){
-			echo "<div class=\"setupInfoSlot\" style=\"background-image: url(&quot;lib/layout/images/role_range.png&quot;); display: block;\">\r\n";
-			echo "+".$rgd."</div>\r\n";
-			}
-			if ($tnk > 0){
-			echo "<div class=\"setupInfoSlot\" style=\"background-image: url(&quot;lib/layout/images/role_tank.png&quot;); display: block;\">\r\n";
-			echo "+".$tnk."</div>\r\n";
-			}
-			if ($med > 0){
-			echo "<div class=\"setupInfoSlot\" style=\"background-image: url(&quot;lib/layout/images/role_heal.png&quot;); display: block;\">\r\n";
-			echo "+".$med."</div>\r\n";
-			}
-			if ($med == 0 && $tnk == 0 && $rgd == 0 && $atk == 0){
-			echo "<div class=\"setupInfoSlot\" style=\"background-image: url(lib/layout/images/slot_ok.png)\"></div>\r\n";
+			if (!empty($available)) {
+				foreach($available as $role => $rolevalue){
+						echo "<div class=\"setupInfoSlot\" style=\"background-image: url(&quot;lib/layout/images/".$roleicon[$role].".png&quot;); display: block;\">\r\n";
+						echo "+".$rolevalue."</div>\r\n";
+					}
+			}else{
+				echo "<div class=\"setupInfoSlot\" style=\"background-image: url(lib/layout/images/slot_ok.png)\"></div>\r\n";
 			}
 			echo "</span></span>";
 			}

@@ -15,10 +15,10 @@ FR:
 * Déjà compatible avec World of Warcraft.
 
 ### How to Install ?
-You just have to put a single php file in the Raidplaner folder, edit the url and the API Token and you're ready to go !
+You just have to put a single php file in the Raidplaner folder, edit the url, the API Token, the game name and you're ready to go !
 
 FR:
-Il vous suffit de placer un seul fichier PHP dans le dossier de RaidPlaner et d'y éditer l'url et le Token pour utiliser l'API, c'est tout !
+Il vous suffit de placer un seul fichier PHP dans le dossier de RaidPlaner et d'y éditer l'url, le Token pour utiliser l'API et le nom du jeu, c'est tout !
 
 
 ### Preview
