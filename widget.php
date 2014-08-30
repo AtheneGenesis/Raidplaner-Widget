@@ -73,7 +73,7 @@ if ($games == "wsta"){
 		<link rel="stylesheet" type="text/css" href="lib/layout/allstyles.php"/>
 		<script type="text/javascript" src="lib/script/jquery-2.0.3.min.js"></script>
     </head>
-	<body>
+	<body style="min-width: 0px!important; min-height: 0px!important;">
 	<div id="raidlist" style="width: 310px!important;">
 	<h1><?php echo $gLocale['Upcoming'];?></h1>
 	<div id="nextRaids" style="width: 310px!important;">
@@ -111,9 +111,9 @@ if ($games == "wsta"){
 			
 			// On affiche
 			echo "<span class=\"raidSlot box_inlay\">\r\n";
-			echo "<span id=\"raid".$v->RaidId."\" class=\"locationImg clickable\" index=\"".$index++."\" locked=\"".$islocked."\">\r\n";
+			echo "<a href=\"index.php#raid,setup,".$v->RaidId."\" target=\"_blank\"><span id=\"raid".$v->RaidId."\" class=\"locationImg clickable\" index=\"".$index++."\" locked=\"".$islocked."\">\r\n";
 			echo "<img src=\"themes/icons/".$locationfolder."/raidbig/".$location[$v->LocationId]['Image']."\">\r\n";
-			echo "<div class=\"overlayStatus overlayStatus".ucfirst($Status)."\"></div></span>\r\n";
+			echo "<div class=\"overlayStatus overlayStatus".ucfirst($Status)."\"></div></span></a>\r\n";
 			echo "<span class=\"raidInfo\">\r\n";
 			echo "<div class=\"location\">".$location[$v->LocationId]['Name']." (".$Size.")</div>\r\n";
 			echo date('d ', $Start)." ".$gLocale[date('F', $Start)]."<br>";
