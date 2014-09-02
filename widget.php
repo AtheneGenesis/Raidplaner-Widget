@@ -17,7 +17,7 @@ $games = "wowp";
 ////////////////// ADVANCED VARIABLES /////////////////             Name	API Default		Desc
 $start = (time()-(60*60*4)); // 		start		0			Return raids starting after this UTC timestamp
 $end = (time()+(60*60*24*7)); // 	end			2147483647	Return raids starting before this UTC timestamp
-$limit = 5; // 						limit		10			Maximum number of raids to return. Passing 0 returns all raids
+$limit = 5; // 						limit		10			Maximum number of raids to return.
 $offset = 0; // 					offset		0			Number of raids to skip if a limit is set
 $location = ""; //					location	""			Return raids on specific locations. Comma separated list of location ids or names
 $full = "true"; //					full		true		Do/do not return raids with all slots set
@@ -38,7 +38,7 @@ $roleicon = array(
 ////////////////////////////////////////////////////////
 $ch = curl_init();
 // On demande la liste des raids
-curl_setopt($ch, CURLOPT_URL,$url.'lib/apihub.php?query=raid&start='.$start.'&offset='.$offset.'&location='.$location.'&games='.$games.'&full='.$full.'&free='.$free.'&open='.$open.'&closed='.$closed.'&canceled='.$canceled.'&token='.$token);
+curl_setopt($ch, CURLOPT_URL,$url.'lib/apihub.php?query=raid&start='.$start.'&end='.$end.'&offset='.$offset.'&location='.$location.'&games='.$games.'&full='.$full.'&free='.$free.'&open='.$open.'&closed='.$closed.'&canceled='.$canceled.'&token='.$token);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 $result = curl_exec($ch);
 $raidlist = json_decode($result);
