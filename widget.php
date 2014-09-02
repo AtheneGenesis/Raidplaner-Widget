@@ -38,7 +38,7 @@ $roleicon = array(
 ////////////////////////////////////////////////////////
 $ch = curl_init();
 // On demande la liste des raids
-curl_setopt($ch, CURLOPT_URL,$url.'lib/apihub.php?query=raid&start='.$start.'&end='.$end.'&offset='.$offset.'&location='.$location.'&games='.$games.'&full='.$full.'&free='.$free.'&open='.$open.'&closed='.$closed.'&canceled='.$canceled.'&token='.$token);
+curl_setopt($ch, CURLOPT_URL,$url.'lib/apihub.php?query=raid&start='.$start.'&end='.$end.'&limit=0&offset='.$offset.'&location='.$location.'&games='.$games.'&full='.$full.'&free='.$free.'&open='.$open.'&closed='.$closed.'&canceled='.$canceled.'&token='.$token);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 $result = curl_exec($ch);
 $raidlist = json_decode($result);
