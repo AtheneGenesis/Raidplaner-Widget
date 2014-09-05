@@ -204,7 +204,7 @@ if ($games == "wsta"){
 			echo date('d ', $Start)." ".$gLocale[date('F', $Start)]."<br>";
 			echo date('H:i', $Start)." - ".date('H:i', $End)."</br>";
 			echo "<div style=\"line-height: 2.5em\">\r\n";
-			echo $Usedslots." / ".$Size." Joueurs</div></span>\r\n";
+			echo $Usedslots." / ".$Size." ".$gLocale['Players']."</div></span>\r\n";
 			echo "<span class=\"setupInfo\">\r\n";
 			if (!empty($available)) {
 				foreach($available as $role => $rolevalue){
