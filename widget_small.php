@@ -72,7 +72,6 @@ if ($games == "wsta"){
     <head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>Raidplaner Widget</title>
-		<!-- <link rel="stylesheet" type="text/css" href="lib/layout/allstyles.php"/> -->
 		<script type="text/javascript" src="lib/script/jquery-2.0.3.min.js"></script>
 		
 		<style>
@@ -108,7 +107,7 @@ if ($games == "wsta"){
 		.raidSlot {
 			display: inline-block;
 			background-repeat: no-repeat;
-			width: 175px;
+			width: 195px;
 			height: 80px;
 			margin-right: 5px;
 			margin-bottom: 1px;
@@ -119,7 +118,6 @@ if ($games == "wsta"){
 			float: right;
 			margin-top: -74px;
 			margin-left: 20px;
-			margin-right: -10px;
 			width: 68px;
 			height: 66px;
 			overflow: hidden;
@@ -145,6 +143,9 @@ if ($games == "wsta"){
 			font-size: 12px;
 			margin-bottom: 5px;
 			height: 12px;
+			width: 80px;
+			word-break: break-all;
+			overflow: hidden;
 		}
 		
 		#raidlist .raidSlot .raidInfo {
@@ -160,8 +161,8 @@ if ($games == "wsta"){
 		</style>
     </head>
 	<body style="min-width: 0px!important; min-height: 0px!important;">
-	<div id="raidlist" style="width: <?php echo ($columns*180) ?>px!important;">
-	<div id="nextRaids" style="width: <?php echo ($columns*180) ?>px!important;">
+	<div id="raidlist" style="width: <?php echo ($columns*200) ?>px!important;">
+	<div id="nextRaids" style="width: <?php echo ($columns*200) ?>px!important;">
 <?php
 		// Boucle principale
 		$index = 0;
