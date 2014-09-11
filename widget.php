@@ -10,7 +10,7 @@ date_default_timezone_set("UTC");
 ////////////////////// VARIABLES //////////////////////
 // $token = "your token in the raidplanner";
 // $url = "http://www.exemple.com/raidplannerdirectory/";
-// $games = "wow,wowp,ff14,teso,sw,wsta"; choose yours !
+// $games = "wow,wowp,ff14,ff14_dark,teso,sw,wsta"; choose yours !
 $token = "";
 $url = '';
 $games = "wowp";
